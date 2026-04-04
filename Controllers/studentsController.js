@@ -73,9 +73,20 @@ export const deleteStudentByID = async (req,res) => {
 }
 
 export const getOneStudent = async (req,res) => {
-    const {Name,Class,Stream} = req.query
+    const {Name,Class,Stream,otp} = req.query
     try {
-        const student = await studentModel.find({Name:Name,Class:Class,Stream:Stream})
+        const query = {}
+        
+        if(Name) query.Name = Name
+        if(Class) query.Class = Class
+        if(Stream) query.Stream = Stream
+        if(otp) query.otp = Number(otp)
+        
+        if(Object.keys(query).length === 0) {
+            return res.status(400).json({message:"At least one query parameter (Name, Stream, Class, or otp) is required"})
+        }
+        
+        const student = await studentModel.find(query)
         res.status(200).json({"querySearchResult":student})
     } catch (error)
      {
