@@ -2,7 +2,22 @@ import studentModel from "../Models/Student.js"
 export const getAllStudents = async (req,res)=>{
     try {
         const Students = await studentModel.find({})
-        res.status(200).json({"Students":Students,"message":{"status":res.statusCode}})
+        const groups = {}
+        Students.forEach(({Class,Stream})=>{
+            if (!groups[Class]){
+                groups[Class] = {Class:Class}
+            }
+            groups[Class][Stream] = (groups[Class][Stream] || 0) + 1
+            })
+        const classAnalysis = Object.values(groups)
+        // const streamAnalysis = Object.values(Students.reduce((acc,{Stream,Class})=>{
+        //     acc[Stream,Class] = acc[Stream] || {name:Stream,class:Class,total:0}
+        //     acc[Stream,Class].total += 1
+        //     return acc
+        // },{}))
+
+        console.log(classAnalysis)
+        res.status(200).json({"Students":Students,"Analytics":classAnalysis,"message":{"status":res.statusCode}})
     } catch (error) {
         res.status(500).json({message:"failed",error:error.message})
         console.log(error.message)

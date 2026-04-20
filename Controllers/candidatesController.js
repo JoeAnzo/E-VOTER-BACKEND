@@ -21,7 +21,18 @@ export const createCandidate  = async (req,res) => {
 export const getCandidates = async (req,res)=>{
     try{
         const candidates = await candidateModel.find({})
-        res.status(200).json({"candidates":candidates})
+        const postsCount = {}
+
+        candidates.forEach(({prefectorial_Post})=>{
+            postsCount[prefectorial_Post] = (postsCount[prefectorial_Post] || 0) + 1
+        })
+        const prefectsAnalysis = Object.keys(postsCount).map((post) => {
+            return {
+                name:post,
+                value:postsCount[post]
+            }
+        })
+        res.status(200).json({"candidates":candidates,"Analytics":prefectsAnalysis})
     } catch(error){
         res.json({"message":error.message})
     }
