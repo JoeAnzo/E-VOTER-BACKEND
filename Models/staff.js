@@ -1,25 +1,15 @@
 import mongoose from "mongoose";
 
-const studentSchema = new mongoose.Schema({
-    Student_ID:{
-        type:String
-    },
+const staffSchema = new mongoose.Schema({
     Name:{
         type:String,
         required:true
     },
-     Gender:{
+    Gender:{
         type:String,
         enum:['Male','Female']
     },
-    House:{
-        type:String,
-    },
-    Stream:{
-        type:String,
-        required:true
-    },
-    Class:{
+    Department:{
         type:String,
         required:true
     },
@@ -32,7 +22,7 @@ const studentSchema = new mongoose.Schema({
         unique:true,
         sparse:true
     }
-})
+},{timestamps:true})
 
-const studentModel = mongoose.model('Student',studentSchema)
-export default studentModel
+const staffModel = mongoose.model('Staff',staffSchema)
+export default staffModel

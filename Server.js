@@ -3,6 +3,8 @@ import connectDatabase from './Config/database.js'
 import studentsRouter from './Routes/studentsRoutes.js'
 import candidatesRouter from './Routes/candidatesRoutes.js'
 import adminRouter from './Routes/adminRoutes.js'
+import votesRouter from './Routes/votesRoutes.js'
+import staffRouter from './Routes/staffRoutes.js'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import dns from 'dns'
@@ -19,6 +21,8 @@ app.use(express.json())
 app.use('/v1/api/Students',studentsRouter)
 app.use('/v1/api/Candidates',candidatesRouter)
 app.use('/v1/api/admin',adminRouter)
+app.use('/v1/api/Votes',votesRouter)
+app.use('/v1/api/Staff',staffRouter)
 
 app.listen(PORT,async ()=>{
     await connectDatabase()
