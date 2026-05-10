@@ -15,9 +15,31 @@ export const getAllStudents = async (req,res)=>{
         //     acc[Stream,Class].total += 1
         //     return acc
         // },{}))
-
         console.log(classAnalysis)
-        res.status(200).json({"Students":Students,"Analytics":classAnalysis,"message":{"status":res.statusCode}})
+        const studentsThatHaveFinishedVoting = await studentModel.find({hasVoted:true})
+        const votingAnalysis = Students.reduce((acc,{Class,Stream,hasVoted}) => {
+            if (hasVoted){
+                acc[Class] = acc[Class] || {}
+                acc[Class][Stream] = (acc[Class][Stream] || 0) + 1
+            } else {
+                acc[Class] = acc[Class] || {}
+                acc[Class][Stream] = (acc[Class][Stream] || 0)
+            }
+            
+            return acc
+        },{})
+        const voteStatEntries = Object.entries(votingAnalysis)
+        const finalVoteAnalysis = voteStatEntries.map(([grade,streams]) => {
+            
+            return {
+
+                Class:grade,
+                Streams:streams
+            }
+
+        })
+        console.log(finalVoteAnalysis)
+        res.status(200).json({"Students":Students,"Analytics":classAnalysis,"votingAnalysis":finalVoteAnalysis,"message":{"status":res.statusCode}})
     } catch (error) {
         res.status(500).json({message:"failed",error:error.message})
         console.log(error.message)

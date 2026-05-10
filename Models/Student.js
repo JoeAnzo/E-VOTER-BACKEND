@@ -10,7 +10,7 @@ const studentSchema = new mongoose.Schema({
     },
      Gender:{
         type:String,
-        enum:['Male','Female']
+        enum:['M','F']
     },
     House:{
         type:String,

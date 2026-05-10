@@ -7,7 +7,7 @@ const staffSchema = new mongoose.Schema({
     },
     Gender:{
         type:String,
-        enum:['Male','Female']
+        enum:['M','F']
     },
     Department:{
         type:String,

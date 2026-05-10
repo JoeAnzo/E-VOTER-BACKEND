@@ -58,6 +58,30 @@ export const getCandidateById = async (req,res)=>{
     
 }
 
+export const getCandidatesByClass = async (req,res) => {
+
+    const {grade} = req.params
+
+    try {
+        const candidates = await candidateModel.find({Class:grade})
+        if (!candidates){
+            res.status(404).json({
+                "message":"No candidates found",
+                "Candidates":[]
+            })
+        }
+        res.status(200).json({
+            "Class":grade,
+            "candidates":candidates
+        })
+    } catch (error) {
+        res.status(500).json({
+            "message":"Failed",
+            "error":error.message
+        })
+    }
+}
+
 export const getCandidatesByPost = async (req,res) => {
     const {post} = req.params
     try {
@@ -99,5 +123,21 @@ export const updateCandidate = async (req,res) => {
         res.status(200).json({"message":"Candidate updated successfully","candidate":updatedCandidate})
     } catch (error) {
         res.status(500).json({message:error.message})
+    }
+}
+
+export const searchForCandidateByName = async (req,res) =>{
+    const {name} = req.query
+    try {
+        if(!name) return res.status(400).json({message:"query 'name' is required"})
+
+        const searchResults = await candidateModel.find({ Candidate_Name: { $regex: name, $options: 'i' } })
+            .limit(5)
+
+        res.status(200).json({ Candidates:searchResults})
+        
+    } catch (error) {
+        res.status(500).json({message:error.message})
+        console.log('error',error.message)
     }
 }
