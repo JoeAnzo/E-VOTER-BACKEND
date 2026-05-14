@@ -62,3 +62,18 @@ export const deleteAllStaffMembers =  async (req,res) => {
 
 }
 
+export const searchStaffMember = async (req,res) =>{
+    const {q} = req.query
+    try {
+        if(!q) return res.status(400).json({message:"query 'q' is required"})
+
+        const searchResults = await staffModel.find({ Name: { $regex: q, $options: 'i' } })
+            .limit(5)
+
+        res.status(200).json({ "Staff Members":searchResults})
+        
+    } catch (error) {
+        res.status(500).json({message:error.message})
+        console.log('error',error.message)
+    }
+}

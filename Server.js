@@ -5,6 +5,7 @@ import candidatesRouter from './Routes/candidatesRoutes.js'
 import adminRouter from './Routes/adminRoutes.js'
 import votesRouter from './Routes/votesRoutes.js'
 import staffRouter from './Routes/staffRoutes.js'
+import contactUsRouter from './Routes/contactUsRoutes.js'
 import morgan from 'morgan'
 import helmet from 'helmet'
 import http from 'http'
@@ -34,6 +35,7 @@ app.use('/v1/api/Candidates',candidatesRouter)
 app.use('/v1/api/admin',adminRouter)
 app.use('/v1/api/Votes',votesRouter)
 app.use('/v1/api/Staff',staffRouter)
+app.use('/v1/api',contactUsRouter)
 
 server.listen(PORT,async ()=>{
     await connectDatabase()

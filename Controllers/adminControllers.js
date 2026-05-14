@@ -86,7 +86,7 @@ export async function loginAdminUser(req,res){
     const students = await studentModel.find({ otp: { $exists: false } });
     
     if (students.length === 0) {
-      return res.status(200).json({ message: "All users already have codes." });
+      return res.status(200).json({ message: "All Students already have codes." });
     }
 
     // 2. Create a pool of numbers (e.g., 1000 to 9999)
@@ -178,7 +178,7 @@ export async function uploadStudentsList(req,res){
     // 4. Bulk insert the JSON data into MongoDB
     await studentModel.insertMany(sheetData);
 
-    res.status(200).json({ success: true, message: 'excel sheet successfully uploaded and saved!' });
+    res.status(200).json({ success: true, message: 'excel File successfully uploaded !' });
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, error: 'Error processing the file.' });

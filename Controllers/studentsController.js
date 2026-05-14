@@ -131,3 +131,17 @@ export const getOneStudent = async (req,res) => {
     }
 
 }
+
+export const deleteAllStudents = async (req,res) => {
+    try{
+        const deleteStudents = await studentModel.deleteMany()
+        res.status(200).json({
+            "message":`Successfull deleted ${deleteStudents.deletedCount} Students`
+        })
+    } catch(error){
+        res.json(500).json({
+            "message":"Failed something went wrong",
+            "error":error.message
+        })
+    }
+}

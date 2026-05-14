@@ -6,7 +6,8 @@ import {
     searchForStudentByName,
     addNewStudent,
     deleteStudentByID,
-    getOneStudent
+    getOneStudent,
+    deleteAllStudents
  } from '../Controllers/studentsController.js'
 
 const studentsRouter = express.Router()
@@ -18,5 +19,6 @@ studentsRouter.post('/',addNewStudent)
 studentsRouter.delete('/delete/:id',deleteStudentByID)
 studentsRouter.get('/One',getOneStudent)
 studentsRouter.get('/:id',getStudentByID)
+studentsRouter.delete('/',deleteAllStudents)
 export default studentsRouter
 
