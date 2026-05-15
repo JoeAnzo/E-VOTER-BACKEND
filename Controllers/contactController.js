@@ -1,11 +1,12 @@
 import nodemailer from 'nodemailer'
 import dotenv from 'dotenv'
 dotenv.config()
-const transporter = nodemailer.createTransport({
-    service:'gmail',
-    auth:{
-        user:'joelanzovule@gmail.com',
-        pass:process.env.NODE_MAILER_PASSWORD
+const transporter = nodemailer.createTransporter({
+    host: 'smtp.sendgrid.net',
+    port: 587,
+    auth: {
+        user: 'apikey',
+        pass: process.env.SENDGRID_API_KEY
     }
 })
 
